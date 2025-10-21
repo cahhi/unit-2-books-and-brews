@@ -19,7 +19,7 @@ public class book {
         this.author = author;
         this.isbn = isbn;
         this.description = description;
-        nextId ++; // incremented automatically
+        nextId++; // incremented automatically
     }
 
     //getters and setters
@@ -77,3 +77,4 @@ public class book {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+}
