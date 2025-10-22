@@ -2,7 +2,8 @@ package org.example.java_spring_boot_back_end_app.models;
 
 import java.util.Objects;
 
-public class book {
+
+public class Book {
 
     private static int nextId = 1; //constructor will increment the id for each book automatically
 
@@ -13,7 +14,7 @@ public class book {
     private int isbn;
     private String description;
 
-    public book(String title, String author, int isbn, String description) {
+    public Book(String title, String author, int isbn, String description) {
         this.id = nextId; //manually telling system to set id using nextId
         this.title = title;
         this.author = author;
@@ -23,6 +24,11 @@ public class book {
     }
 
     //getters and setters
+
+    public int getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -69,7 +75,7 @@ public class book {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        book book = (book) o;
+        Book book = (Book) o;
         return id == book.id;
     }
 
