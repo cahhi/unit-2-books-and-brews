@@ -13,13 +13,17 @@ public class Book {
     private String author;
     private long isbn;
     private String description;
+    private float salePrice;
+    private float originalPrice;
 
-    public Book(String title, String author, long isbn, String description) {
+    public Book(String title, String author, long isbn, String description, float salePrice, float originalPrice) {
         this.id = nextId; //manually telling system to set id using nextId
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.description = description;
+        this.salePrice = salePrice;
+        this.originalPrice = originalPrice;
         nextId++; // incremented automatically
     }
 
@@ -61,13 +65,31 @@ public class Book {
         this.description = description;
     }
 
+    public float getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(float salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    public float getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(float originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
     @Override
     public String toString() {
         return
                 "title: '" + title + '\'' +
                 ", author: '" + author + '\'' +
                 ", isbn: " + isbn +
-                ", description: '" + description + '\'' ;
+                ", description: '" + description + '\'' +
+                ", sale price: '" + salePrice + '\'' +
+                ", original price: '" + originalPrice + '\'';
     }
 
     //make easy certain operations  to be completed

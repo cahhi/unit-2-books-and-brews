@@ -34,14 +34,16 @@ public class BookController {
                 "<p><b>Title:</b> " + book.getTitle() + "</p>" +
                 "<p><b>Author:</b> " + book.getAuthor() + "</p>" +
                 "<p><b>ISBN:</b> " + book.getIsbn() + "</p>" +
-                "<p><b>Description:</b> " + book.getDescription() + "</p>";
+                "<p><b>Description:</b> " + book.getDescription() + "</p>" +
+                "<p><b>Sale Price:</b> " + book.getSalePrice() + "</p>" +
+                "<p><b>Original Price:</b> " + book.getOriginalPrice() + "</p>";
     }
 
     //Save book
     //use query parameters
     @PostMapping("/add")
-    public String addNewBook(@RequestParam String title, String author, long isbn, String description) {
-        Book newBook = new Book(title, author, isbn, description);
+    public String addNewBook(@RequestParam String title, String author, long isbn, String description, float salePrice, float originalPrice) {
+        Book newBook = new Book(title, author, isbn, description, salePrice, originalPrice);
         BookData.addNewBook(newBook);
         return "Book added successfully: " + newBook;
     }
