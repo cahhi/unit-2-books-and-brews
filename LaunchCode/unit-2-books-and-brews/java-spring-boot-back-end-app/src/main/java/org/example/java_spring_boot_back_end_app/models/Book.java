@@ -11,10 +11,10 @@ public class Book {
     private final int id; // set in constructor
     private String title;
     private String author;
-    private int isbn;
+    private long isbn;
     private String description;
 
-    public Book(String title, String author, int isbn, String description) {
+    public Book(String title, String author, long isbn, String description) {
         this.id = nextId; //manually telling system to set id using nextId
         this.title = title;
         this.author = author;
@@ -45,11 +45,11 @@ public class Book {
         this.author = author;
     }
 
-    public int getIsbn() {
+    public long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(int isbn) {
+    public void setIsbn(long isbn) {
         this.isbn = isbn;
     }
 
@@ -63,12 +63,11 @@ public class Book {
 
     @Override
     public String toString() {
-        return "book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", isbn=" + isbn +
-                ", description='" + description + '\'' +
-                '}';
+        return
+                "title: '" + title + '\'' +
+                ", author: '" + author + '\'' +
+                ", isbn: " + isbn +
+                ", description: '" + description + '\'' ;
     }
 
     //make easy certain operations  to be completed
