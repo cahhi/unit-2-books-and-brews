@@ -1,32 +1,43 @@
 package org.example.java_spring_boot_back_end_app.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
+//Converting the Book Model into an entity
 
+
+@Entity //Spring and Hibernate know to look at the rest of the annotations added
 public class Book {
 
-    private static int nextId = 1; //constructor will increment the id for each book automatically
+    //Identify the id to be a primary key and auto-incremented
+    @Id //Making this the primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//Generating the value of the ID automatically and making sure to autoincrement properly
+    private int id;
 
-
-    private final int id; // set in constructor
+    @Column(name="book_title") // I want the column to be named Book title instead of just title
     private String title;
+
     private String author;
+
     private String description;
+
     private String genre;
+
     private boolean isTrending;
+
     private float salePrice;
+
     private float originalPrice;
 
+    public Book() {}; //need to be able to create an object and then use real constructor when ready to place values
+
     public Book(String title, String author, String description, String genre, Boolean isTrending, float salePrice, float originalPrice) {
-        this.id = nextId; //manually telling system to set id using nextId
         this.title = title;
         this.author = author;
         this.description = description;
         this.salePrice = salePrice;
         this.originalPrice = originalPrice;
-        nextId++; // incremented automatically
     }
 
     //getters and setters
