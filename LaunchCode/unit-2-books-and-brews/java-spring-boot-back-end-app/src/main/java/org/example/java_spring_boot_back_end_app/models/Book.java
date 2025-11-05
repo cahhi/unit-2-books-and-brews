@@ -1,5 +1,7 @@
 package org.example.java_spring_boot_back_end_app.models;
 
+import jakarta.persistence.Entity;
+
 import java.util.Objects;
 
 
@@ -11,16 +13,16 @@ public class Book {
     private final int id; // set in constructor
     private String title;
     private String author;
-    private long isbn;
     private String description;
+    private String genre;
+    private boolean isTrending;
     private float salePrice;
     private float originalPrice;
 
-    public Book(String title, String author, long isbn, String description, float salePrice, float originalPrice) {
+    public Book(String title, String author, String description, String genre, Boolean isTrending, float salePrice, float originalPrice) {
         this.id = nextId; //manually telling system to set id using nextId
         this.title = title;
         this.author = author;
-        this.isbn = isbn;
         this.description = description;
         this.salePrice = salePrice;
         this.originalPrice = originalPrice;
@@ -49,20 +51,28 @@ public class Book {
         this.author = author;
     }
 
-    public long getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(long isbn) {
-        this.isbn = isbn;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public Boolean getIsTrending() {
+        return isTrending;
+    }
+
+    public void setIsTrending(Boolean isTrending) {
+        this.isTrending = isTrending;
     }
 
     public float getSalePrice() {
@@ -86,7 +96,6 @@ public class Book {
         return
                 "title: '" + title + '\'' +
                 ", author: '" + author + '\'' +
-                ", isbn: " + isbn +
                 ", description: '" + description + '\'' +
                 ", sale price: '" + salePrice + '\'' +
                 ", original price: '" + originalPrice + '\'';

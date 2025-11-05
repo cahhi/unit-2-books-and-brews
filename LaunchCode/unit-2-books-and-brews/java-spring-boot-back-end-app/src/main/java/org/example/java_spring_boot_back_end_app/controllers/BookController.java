@@ -33,8 +33,9 @@ public class BookController {
                "<p><b>ID:</b> " + book.getId() + "</p>" +
                 "<p><b>Title:</b> " + book.getTitle() + "</p>" +
                 "<p><b>Author:</b> " + book.getAuthor() + "</p>" +
-                "<p><b>ISBN:</b> " + book.getIsbn() + "</p>" +
                 "<p><b>Description:</b> " + book.getDescription() + "</p>" +
+                "<p><b>Genre:</b> " + book.getGenre() + "</p>" +
+                "<p><b>Trending:</b> " + book.getIsTrending() + "</p>" +
                 "<p><b>Sale Price:</b> " + book.getSalePrice() + "</p>" +
                 "<p><b>Original Price:</b> " + book.getOriginalPrice() + "</p>";
     }
@@ -42,8 +43,8 @@ public class BookController {
     //Save book
     //use query parameters
     @PostMapping("/add")
-    public String addNewBook(@RequestParam String title, String author, long isbn, String description, float salePrice, float originalPrice) {
-        Book newBook = new Book(title, author, isbn, description, salePrice, originalPrice);
+    public String addNewBook(@RequestParam String title, String author, String description, String genre, Boolean isTrending, float salePrice, float originalPrice) {
+        Book newBook = new Book(title, author, description, genre, isTrending, salePrice, originalPrice);
         BookData.addNewBook(newBook);
         return "Book added successfully: " + newBook;
     }
