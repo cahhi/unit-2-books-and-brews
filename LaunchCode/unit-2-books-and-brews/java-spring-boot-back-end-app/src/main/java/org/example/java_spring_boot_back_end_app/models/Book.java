@@ -36,6 +36,8 @@ public class Book {
         this.title = title;
         this.author = author;
         this.description = description;
+        this.genre = genre;
+        this.isTrending = isTrending;
         this.salePrice = salePrice;
         this.originalPrice = originalPrice;
     }
@@ -105,11 +107,14 @@ public class Book {
     @Override
     public String toString() {
         return
-                "title: '" + title + '\'' +
-                ", author: '" + author + '\'' +
-                ", description: '" + description + '\'' +
-                ", sale price: '" + salePrice + '\'' +
-                ", original price: '" + originalPrice + '\'';
+                "Title: '" + title + '\'' +
+                ", Author: '" + author + '\'' +
+                ", Description: '" + description + '\'' +
+                ", Genre: '" + genre + '\'' +
+                ", Trending: '" + isTrending + '\'' +
+                ", Sale Price: '" + salePrice + '\'' +
+                ", Original Price: '" + originalPrice + '\'';
+
     }
 
     //make easy certain operations  to be completed
