@@ -36,11 +36,11 @@ public class BookController {
     //Returning book object from database or using null if not found
     //Retrieve a specific book
     @GetMapping(value="/details/{bookId}", produces =MediaType.APPLICATION_JSON_VALUE ) //path variable
-    public ResponseEntity<?> getBookById(@PathVariable int bookId) {
+    public ResponseEntity<?> getBookById(@PathVariable int bookId) throws NoResourceFoundException {
         Book book =  bookRepository.findById(bookId).orElse(null); //returning object and Spring returns it as a JSON
         if (book == null) {
-           // TODO: handle with custom exception
-            return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND); //? allows for me to send anything back in the body and will produce a 404
+            String path = "/api/books/details/" + bookId;
+            throw new NoResourceFoundException(HttpMethod.GET, path); //? allows for me to send anything back in the body and will produce a 404
         } else {
             return new ResponseEntity<>(book, HttpStatus.OK); //this will return as 200 ok
         }
