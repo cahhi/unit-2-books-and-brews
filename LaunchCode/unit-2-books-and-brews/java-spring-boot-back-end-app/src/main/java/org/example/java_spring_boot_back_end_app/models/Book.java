@@ -1,6 +1,9 @@
 package org.example.java_spring_boot_back_end_app.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
@@ -15,19 +18,30 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)//Generating the value of the ID automatically and making sure to autoincrement properly
     private int id;
 
-    @Column(name="book_title") // I want the column to be named Book title instead of just title
+    @Column(name="book_title")// I want the column to be named Book title instead of just title
+    @NotBlank(message="Book title is required.") //value can not be blank/null
+    @Size(min=2, max=60, message="Book title must be 2 - 60 characters long.") // creating a min/max character validation
     private String title;
 
+    @NotBlank(message="Book author is required.")
+    @Size(min=2, max=60, message="Book author must be 2 - 60 characters long.")
     private String author;
 
+    @NotBlank(message="Book description is required.")
+    @Size(min=2, max=255, message="Book description must be 2 - 255 characters long.")
     private String description;
 
+    @NotBlank(message="Book genre is required.")
+    @Size(min=2, max=10, message="Book genre must be 2 - 10 characters long.")
     private String genre;
 
+    @NotNull(message="Must specify if a book is trending using true/false.")
     private boolean isTrending;
 
+    @NotNull(message="Book sales price is required.")
     private float salePrice;
 
+    @NotNull(message="Book original price is required.")
     private float originalPrice;
 
     public Book() {}; //need to be able to create an object and then use real constructor when ready to place values
