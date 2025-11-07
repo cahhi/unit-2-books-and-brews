@@ -3,9 +3,7 @@ package org.example.java_spring_boot_back_end_app.controllers;
 
 import jakarta.validation.Valid;
 import org.example.java_spring_boot_back_end_app.models.Author;
-import org.example.java_spring_boot_back_end_app.models.Book;
 import org.example.java_spring_boot_back_end_app.repositories.AuthorRepository;
-import org.example.java_spring_boot_back_end_app.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
