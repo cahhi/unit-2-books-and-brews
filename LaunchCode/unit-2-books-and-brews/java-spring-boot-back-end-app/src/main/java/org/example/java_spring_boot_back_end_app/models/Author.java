@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Author {
@@ -14,8 +15,6 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    //TODO: Once AuthorDTO is created, transfer validation annotations for firstName and lastName
 
     @NotBlank(message = "Author's first name is required.")
     @Size(min=1, max=40, message = "Author's first name must be 1 - 40 characters long.")
@@ -54,5 +53,18 @@ public class Author {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    //make easy certain operations  to be completed
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return id == author.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

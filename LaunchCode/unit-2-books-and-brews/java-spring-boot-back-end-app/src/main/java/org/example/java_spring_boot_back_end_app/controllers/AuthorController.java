@@ -2,6 +2,7 @@ package org.example.java_spring_boot_back_end_app.controllers;
 
 
 import jakarta.validation.Valid;
+import org.example.java_spring_boot_back_end_app.dto.AuthorDTO;
 import org.example.java_spring_boot_back_end_app.models.Author;
 import org.example.java_spring_boot_back_end_app.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/author") //this is where we tell Spring what the base path is for all the endpoints in this controller
+@RequestMapping("/api/authors") //this is where we tell Spring what the base path is for all the endpoints in this controller
 public class AuthorController {
 
     //Using Autowire to use JpaRepository methods to interact with database
@@ -49,7 +50,8 @@ public class AuthorController {
     //Save author
     //use query parameters
     @PostMapping(value="/add", consumes=MediaType.APPLICATION_JSON_VALUE) //must do key value because I am adding a second one
-    public ResponseEntity<?> addNewAuthor(@Valid @RequestBody Author author) { //structuring in a way that Spring can directly translate to the model and providing validation
+    public ResponseEntity<?> addNewAuthor(@Valid @RequestBody AuthorDTO authorData) { //structuring in a way that Spring can directly translate to the model and providing validation
+        Author author = new Author(authorData.getFirstName(), authorData.getLastName());
         authorRepository.save(author);
         return new ResponseEntity<>(author, HttpStatus.CREATED); //corresponds to 201
     }
