@@ -4,7 +4,12 @@ package org.example.java_spring_boot_back_end_app.controllers;
 import org.example.java_spring_boot_back_end_app.models.Book;
 import org.example.java_spring_boot_back_end_app.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,26 +26,46 @@ public class BookController {
     // Retrieve all books
     // GET http://localhost:8080/api/books
     @GetMapping("") //no additional path to add
-    public List<?> getAllBooks() { //allows me to list the books since not needing a collection, and the ? mark says that I'm not sure what will be in there yet
+    public ResponseEntity<?> getAllBooks() { //allows me to list the books since not needing a collection, and the ? mark says that I'm not sure what will be in there yet
         // For demonstration purposes, returning a static list of books
-       return bookRepository.findAll();
+       List<Book> allBooks = bookRepository.findAll();
+       return new ResponseEntity<>(allBooks, HttpStatus.OK); // corresponds to the 200 response
     }
 
     //Returning book object from database or using null if not found
     //Retrieve a specific book
-    @GetMapping("/details/{bookId}") //path variable
-    public Book getBookById(@PathVariable int bookId) {
-        return bookRepository.findById(bookId).orElse(null); //returning object and Spring returns it as a JSON
+    @GetMapping(value="/details/{bookId}", produces =MediaType.APPLICATION_JSON_VALUE ) //path variable
+    public ResponseEntity<?> getBookById(@PathVariable int bookId) {
+        Book book =  bookRepository.findById(bookId).orElse(null); //returning object and Spring returns it as a JSON
+        if (book == null) {
+           // TODO: handle with custom exception
+            return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND); //? allows for me to send anything back in the body and will produce a 404
+        } else {
+            return new ResponseEntity<>(book, HttpStatus.OK); //this will return as 200 ok
+        }
     }
 
     //Save book
     //use query parameters
-    @PostMapping("/add")
-    public String addNewBook(@RequestParam String title, String author, String description, String genre, Boolean isTrending, float salePrice, float originalPrice) { //will refactor later
-        Book newBook = new Book(title, author, description, genre, isTrending, salePrice, originalPrice);
-        bookRepository.save(newBook);
-        return "Book added successfully: " + newBook;
+    @PostMapping(value="/add", consumes=MediaType.APPLICATION_JSON_VALUE) //must do key value because I am adding a second one
+    public ResponseEntity<?> addNewBook(@RequestBody Book book) { //structuring in a way that Spring can directly translate to the model
+        bookRepository.save(book);
+        return new ResponseEntity<>(book, HttpStatus.CREATED); //corresponds to 201
     }
+
+    //Delete book
+    @DeleteMapping(value="/delete/{bookId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteBook(@PathVariable int bookId) {
+        Book book = bookRepository.findById(bookId).orElse(null);
+        if (book == null) {
+            return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND); //? allows for me to send anything back in the body and will produce a 404
+        }else {
+            bookRepository.deleteById(bookId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // this will throw error 204
+        }
+    }
+
+    //Update book
 
 
 }
