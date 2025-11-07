@@ -1,5 +1,6 @@
 package org.example.java_spring_boot_back_end_app.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,9 +24,11 @@ public class Book {
     @Size(min=2, max=60, message="Book title must be 2 - 60 characters long.") // creating a min/max character validation
     private String title;
 
+    //setting the relationship between author and book
+    @ManyToOne //many books to one author
     @NotBlank(message="Book author is required.")
-    @Size(min=2, max=60, message="Book author must be 2 - 60 characters long.")
-    private String author;
+    @JsonManagedReference
+    private Author author;
 
     @NotBlank(message="Book description is required.")
     @Size(min=2, max=255, message="Book description must be 2 - 255 characters long.")
@@ -46,7 +49,7 @@ public class Book {
 
     public Book() {}; //need to be able to create an object and then use real constructor when ready to place values
 
-    public Book(String title, String author, String description, String genre, Boolean isTrending, float salePrice, float originalPrice) {
+    public Book(String title, Author author, String description, String genre, Boolean isTrending, float salePrice, float originalPrice) {
         this.title = title;
         this.author = author;
         this.description = description;
@@ -70,11 +73,11 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
