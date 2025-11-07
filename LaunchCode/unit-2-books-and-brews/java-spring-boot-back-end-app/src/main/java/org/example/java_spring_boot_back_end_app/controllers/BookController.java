@@ -61,7 +61,7 @@ public class BookController {
             return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND); //? allows for me to send anything back in the body and will produce a 404
         }else {
             bookRepository.deleteById(bookId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // this will throw error 204
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // this will throw error 204 which means it was successful
         }
     }
 
