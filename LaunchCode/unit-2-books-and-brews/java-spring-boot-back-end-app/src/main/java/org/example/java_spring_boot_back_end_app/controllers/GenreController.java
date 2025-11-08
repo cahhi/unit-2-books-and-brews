@@ -25,36 +25,17 @@ public class GenreController {
     @Autowired
     GenreRepository genreRepository; //I am declaring this but, I don't need to initialize since JPA will do that behind the scenes
 
-    //need access to the Author Repository
-    @Autowired
-    AuthorRepository authorRepository;
-
-
     // Retrieve all genres
     // GET http://localhost:8080/api/genres
     @GetMapping("") //no additional path to add
-    public ResponseEntity<?> getAllGenres() { //allows me to list the genres since not needing a collection, and the ? mark says that I'm not sure what will be in there yet
-        // For demonstration purposes, returning a static list of genres
+    public ResponseEntity<?> getAllGenres() { //allows me to list the genres since not needing a collection, and the ? mark says that I'm not sure what will be in there ye
         List<Genre> allGenres = genreRepository.findAll();
         return new ResponseEntity<>(allGenres, HttpStatus.OK); // corresponds to the 200 response
     }
 
-    //Returning genre object from database or using null if not found
-    //Retrieve a specific genre
-    @GetMapping(value="/details/{genreId}", produces =MediaType.APPLICATION_JSON_VALUE ) //path variable
-    public ResponseEntity<?> getGenreById(@PathVariable int genreId) throws NoResourceFoundException {
-        Genre genre =  genreRepository.findById(genreId).orElse(null); //returning object and Spring returns it as a JSON
-        if (genre == null) {
-            String path = "/api/genres/details/" + genreId;
-            throw new NoResourceFoundException(HttpMethod.GET, path); //? allows for me to send anything back in the body and will produce a 404
-        } else {
-            return new ResponseEntity<>(genre, HttpStatus.OK); //this will return as 200 ok
-        }
-    }
-
     //Save genre
     //use query parameters
-    @PostMapping(value="/add", consumes=MediaType.APPLICATION_JSON_VALUE) //must do key value because I am adding a second one
+    @PostMapping(value="/add", consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) //must do key value because I am adding a second one
     public ResponseEntity<?> addNewGenre(@Valid @RequestBody GenreDTO genreData) { //structuring in a way that Spring can directly translate to the model and providing validation
         Genre genre = new Genre(genreData.getTitle());
         genreRepository.save(genre);
@@ -62,7 +43,7 @@ public class GenreController {
     }
 
     //Delete genre
-    @DeleteMapping(value="/delete/{genreId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value="/delete/{genreId}")
     public ResponseEntity<?> deleteGenre(@PathVariable int genreId) throws NoResourceFoundException { //adding to signature of the method
         Genre genre = genreRepository.findById(genreId).orElse(null);
         if (genre == null) {

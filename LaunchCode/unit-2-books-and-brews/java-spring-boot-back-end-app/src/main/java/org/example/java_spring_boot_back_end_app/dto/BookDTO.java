@@ -1,12 +1,10 @@
 package org.example.java_spring_boot_back_end_app.dto;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.example.java_spring_boot_back_end_app.models.Author;
 
 public class BookDTO {
 
@@ -70,14 +68,6 @@ public class BookDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public boolean isTrending() {
