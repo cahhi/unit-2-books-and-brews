@@ -52,11 +52,11 @@ public class Book {
 
     public Book() {}; //need to be able to create an object and then use real constructor when ready to place values
 
-    public Book(String title, Author author, String description, String genre, Boolean isTrending, float salePrice, float originalPrice) {
+    public Book(String title, Author author, String description, List<Genre> genres, Boolean isTrending, float salePrice, float originalPrice) {
         this.title = title;
         this.author = author;
         this.description = description;
-        this.genre = genre;
+        this.genres = genres;
         this.isTrending = isTrending;
         this.salePrice = salePrice;
         this.originalPrice = originalPrice;
@@ -92,12 +92,12 @@ public class Book {
         this.description = description;
     }
 
-    public String getGenre() {
-        return genre;
+    public List<Genre> getGenres() {
+        return genres;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 
     public Boolean getIsTrending() {

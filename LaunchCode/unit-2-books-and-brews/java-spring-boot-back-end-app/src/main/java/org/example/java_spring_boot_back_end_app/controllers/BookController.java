@@ -5,8 +5,10 @@ import jakarta.validation.Valid;
 import org.example.java_spring_boot_back_end_app.dto.BookDTO;
 import org.example.java_spring_boot_back_end_app.models.Author;
 import org.example.java_spring_boot_back_end_app.models.Book;
+import org.example.java_spring_boot_back_end_app.models.Genre;
 import org.example.java_spring_boot_back_end_app.repositories.AuthorRepository;
 import org.example.java_spring_boot_back_end_app.repositories.BookRepository;
+import org.example.java_spring_boot_back_end_app.repositories.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,6 +32,10 @@ public class BookController {
     //need access to the Author Repository
     @Autowired
     AuthorRepository authorRepository;
+
+    //need access to the Genre Repository
+    @Autowired
+    GenreRepository genreRepository;
 
 
     // Retrieve all books
@@ -58,7 +65,14 @@ public class BookController {
     @PostMapping(value="/add", consumes=MediaType.APPLICATION_JSON_VALUE) //must do key value because I am adding a second one
     public ResponseEntity<?> addNewBook(@Valid @RequestBody BookDTO bookData) { //structuring in a way that Spring can directly translate to the model and providing validation
         Author author = authorRepository.findById(bookData.getAuthorId()).orElse(null);
-        Book book = new Book(bookData.getTitle(), author, bookData.getDescription(), bookData.getGenre(), bookData.isTrending(), bookData.getSalePrice(), bookData.getOriginalPrice());
+        List<Genre> genres = new ArrayList<>();
+        for (int genreId : bookData.getGenreIds()) {
+           Genre genre = genreRepository.findById(genreId).orElse(null);
+           if (genre != null) {
+               genres.add(genre);
+           }
+        }
+        Book book = new Book(bookData.getTitle(), author, bookData.getDescription(), genres, bookData.isTrending(), bookData.getSalePrice(), bookData.getOriginalPrice());
         bookRepository.save(book);
         return new ResponseEntity<>(book, HttpStatus.CREATED); //corresponds to 201
     }
