@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.List;
 import java.util.Objects;
 
 //Converting the Book Model into an entity
@@ -19,14 +21,9 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)//Generating the value of the ID automatically and making sure to autoincrement properly
     private int id;
 
-    @Column(name="book_title")// I want the column to be named Book title instead of just title
-    @NotBlank(message="Book title is required.") //value can not be blank/null
-    @Size(min=2, max=60, message="Book title must be 2 - 60 characters long.") // creating a min/max character validation
     private String title;
 
-    //setting the relationship between author and book
     @ManyToOne //many books to one author
-    @NotBlank(message="Book author is required.")
     @JsonManagedReference
     private Author author;
 
@@ -46,6 +43,12 @@ public class Book {
 
     @NotNull(message="Book original price is required.")
     private float originalPrice;
+
+    //adding a list of Genre objects and setting them to a many-to-many relationship
+    @ManyToMany
+    @JsonManagedReference
+    private List<Genre> genres;
+
 
     public Book() {}; //need to be able to create an object and then use real constructor when ready to place values
 

@@ -16,9 +16,7 @@ public class BookDTO {
     private String title;
 
     //setting the relationship between author and book
-    @ManyToOne //many books to one author
-    @NotBlank(message="Book author is required.")
-    @JsonManagedReference
+    @NotNull(message="Book author is required.")
     private int authorId;
 
     @NotBlank(message="Book description is required.")
@@ -38,11 +36,13 @@ public class BookDTO {
     @NotNull(message="Book original price is required.")
     private float originalPrice;
 
-    public BookDTO(String title, String description, int authorId, String genre, boolean isTrending, float salePrice, float originalPrice) {
+    int[] genreIds;
+
+    public BookDTO(String title, String description, int authorId, int[] genreIds, boolean isTrending, float salePrice, float originalPrice) {
         this.title = title;
         this.description = description;
         this.authorId = authorId;
-        this.genre = genre;
+        this.genreIds = genreIds;
         this.isTrending = isTrending;
         this.salePrice = salePrice;
         this.originalPrice = originalPrice;
@@ -102,5 +102,13 @@ public class BookDTO {
 
     public void setOriginalPrice(float originalPrice) {
         this.originalPrice = originalPrice;
+    }
+
+    public int[] getGenreIds() {
+        return genreIds;
+    }
+
+    public void setGenreIds(int[] genreIds) {
+        this.genreIds = genreIds;
     }
 }

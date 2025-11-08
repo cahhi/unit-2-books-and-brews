@@ -2,7 +2,10 @@ package org.example.java_spring_boot_back_end_app.controllers;
 
 
 import jakarta.validation.Valid;
+import org.example.java_spring_boot_back_end_app.dto.BookDTO;
+import org.example.java_spring_boot_back_end_app.models.Author;
 import org.example.java_spring_boot_back_end_app.models.Book;
+import org.example.java_spring_boot_back_end_app.repositories.AuthorRepository;
 import org.example.java_spring_boot_back_end_app.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -22,6 +25,10 @@ public class BookController {
     //Using Autowire to use JpaRepository methods to interact with database
     @Autowired
     BookRepository bookRepository; //I am declaring this but, I don't need to initialize since JPA will do that behind the scenes
+
+    //need access to the Author Repository
+    @Autowired
+    AuthorRepository authorRepository;
 
 
     // Retrieve all books
@@ -49,7 +56,9 @@ public class BookController {
     //Save book
     //use query parameters
     @PostMapping(value="/add", consumes=MediaType.APPLICATION_JSON_VALUE) //must do key value because I am adding a second one
-    public ResponseEntity<?> addNewBook(@Valid @RequestBody Book book) { //structuring in a way that Spring can directly translate to the model and providing validation
+    public ResponseEntity<?> addNewBook(@Valid @RequestBody BookDTO bookData) { //structuring in a way that Spring can directly translate to the model and providing validation
+        Author author = authorRepository.findById(bookData.getAuthorId()).orElse(null);
+        Book book = new Book(bookData.getTitle(), author, bookData.getDescription(), bookData.getGenre(), bookData.isTrending(), bookData.getSalePrice(), bookData.getOriginalPrice());
         bookRepository.save(book);
         return new ResponseEntity<>(book, HttpStatus.CREATED); //corresponds to 201
     }
