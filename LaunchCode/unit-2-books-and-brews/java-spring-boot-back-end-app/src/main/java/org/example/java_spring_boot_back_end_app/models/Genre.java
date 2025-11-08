@@ -15,10 +15,6 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //Create GenreDTO to transfer validation annotations for the title
-
-    @NotBlank(message = "Genre is required")
-    @Size(min=1, max=30, message = "Genre must be 1 - 30 characters long")
     private String title;
 
     @ManyToMany(mappedBy = "genres")
