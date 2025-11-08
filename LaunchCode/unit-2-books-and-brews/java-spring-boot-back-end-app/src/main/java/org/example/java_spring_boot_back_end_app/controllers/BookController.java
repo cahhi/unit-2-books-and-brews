@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -62,7 +61,7 @@ public class BookController {
 
     //Save book
     //use query parameters
-    @PostMapping(value="/add", consumes=MediaType.APPLICATION_JSON_VALUE) //must do key value because I am adding a second one
+    @PostMapping(value="/add", consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) //must do key value because I am adding a second one
     public ResponseEntity<?> addNewBook(@Valid @RequestBody BookDTO bookData) { //structuring in a way that Spring can directly translate to the model and providing validation
         Author author = authorRepository.findById(bookData.getAuthorId()).orElse(null);
         List<Genre> genres = new ArrayList<>();
@@ -72,7 +71,7 @@ public class BookController {
                genres.add(genre);
            }
         }
-        Book book = new Book(bookData.getTitle(), author, bookData.getDescription(), genres, bookData.isTrending(), bookData.getSalePrice(), bookData.getOriginalPrice());
+        Book book = new Book(bookData.getTitle(), author, bookData.getDescription(), genres);
         bookRepository.save(book);
         return new ResponseEntity<>(book, HttpStatus.CREATED); //corresponds to 201
     }

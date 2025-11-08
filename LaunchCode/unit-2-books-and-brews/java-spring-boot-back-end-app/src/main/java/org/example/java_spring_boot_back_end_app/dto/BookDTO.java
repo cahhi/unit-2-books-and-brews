@@ -1,10 +1,13 @@
 package org.example.java_spring_boot_back_end_app.dto;
 
 
+
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.example.java_spring_boot_back_end_app.models.Description;
+
 
 public class BookDTO {
 
@@ -17,13 +20,9 @@ public class BookDTO {
     @NotNull(message="Book author is required.")
     private int authorId;
 
-    @NotBlank(message="Book description is required.")
-    @Size(min=2, max=255, message="Book description must be 2 - 255 characters long.")
-    private String description;
+    int[] genreIds;
 
-    @NotBlank(message="Book genre is required.")
-    @Size(min=2, max=10, message="Book genre must be 2 - 10 characters long.")
-    private String genre;
+    private Description description;
 
     @NotNull(message="Must specify if a book is trending using true/false.")
     private boolean isTrending;
@@ -34,16 +33,12 @@ public class BookDTO {
     @NotNull(message="Book original price is required.")
     private float originalPrice;
 
-    int[] genreIds;
 
-    public BookDTO(String title, String description, int authorId, int[] genreIds, boolean isTrending, float salePrice, float originalPrice) {
+    public BookDTO(String title, int authorId, int[] genreIds, Description description) {
         this.title = title;
-        this.description = description;
         this.authorId = authorId;
         this.genreIds = genreIds;
-        this.isTrending = isTrending;
-        this.salePrice = salePrice;
-        this.originalPrice = originalPrice;
+        this.description = description;
     }
 
     public String getTitle() {
@@ -62,43 +57,19 @@ public class BookDTO {
         this.authorId = authorId;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isTrending() {
-        return isTrending;
-    }
-
-    public void setTrending(boolean trending) {
-        isTrending = trending;
-    }
-
-    public float getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(float salePrice) {
-        this.salePrice = salePrice;
-    }
-
-    public float getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(float originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
     public int[] getGenreIds() {
         return genreIds;
     }
 
     public void setGenreIds(int[] genreIds) {
         this.genreIds = genreIds;
+    }
+
+    public Description getDescription() {
+        return description;
+    }
+
+    public void setDescription(Description description) {
+        this.description = description;
     }
 }

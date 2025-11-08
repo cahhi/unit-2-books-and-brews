@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,14 +26,6 @@ public class Book {
     @JsonManagedReference
     private Author author;
 
-    @NotBlank(message="Book description is required.")
-    @Size(min=2, max=255, message="Book description must be 2 - 255 characters long.")
-    private String description;
-
-    @NotBlank(message="Book genre is required.")
-    @Size(min=2, max=10, message="Book genre must be 2 - 10 characters long.")
-    private String genre;
-
     @NotNull(message="Must specify if a book is trending using true/false.")
     private boolean isTrending;
 
@@ -49,17 +40,19 @@ public class Book {
     @JsonManagedReference
     private List<Genre> genres;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "description_id", referencedColumnName = "id")
+    private Description description;
+
+
 
     public Book() {}; //need to be able to create an object and then use real constructor when ready to place values
 
-    public Book(String title, Author author, String description, List<Genre> genres, Boolean isTrending, float salePrice, float originalPrice) {
+    public Book(String title, Author author, Description description, List<Genre> genres) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.genres = genres;
-        this.isTrending = isTrending;
-        this.salePrice = salePrice;
-        this.originalPrice = originalPrice;
     }
 
     //getters and setters
@@ -84,13 +77,7 @@ public class Book {
         this.author = author;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public List<Genre> getGenres() {
         return genres;
@@ -100,28 +87,12 @@ public class Book {
         this.genres = genres;
     }
 
-    public Boolean getIsTrending() {
-        return isTrending;
+    public Description getDescription() {
+        return description;
     }
 
-    public void setIsTrending(Boolean isTrending) {
-        this.isTrending = isTrending;
-    }
-
-    public float getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(float salePrice) {
-        this.salePrice = salePrice;
-    }
-
-    public float getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(float originalPrice) {
-        this.originalPrice = originalPrice;
+    public void setDescription(Description description) {
+        this.description = description;
     }
 
     @Override
@@ -130,10 +101,7 @@ public class Book {
                 "Title: '" + title + '\'' +
                 ", Author: '" + author + '\'' +
                 ", Description: '" + description + '\'' +
-                ", Genre: '" + genre + '\'' +
-                ", Trending: '" + isTrending + '\'' +
-                ", Sale Price: '" + salePrice + '\'' +
-                ", Original Price: '" + originalPrice + '\'';
+                ", Genres: '" + genres + '\'';
 
     }
 
