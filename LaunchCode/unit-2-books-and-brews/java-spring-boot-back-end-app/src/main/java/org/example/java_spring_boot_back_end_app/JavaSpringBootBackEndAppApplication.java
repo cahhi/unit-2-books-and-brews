@@ -11,3 +11,8 @@ public class JavaSpringBootBackEndAppApplication {
 	}
 
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> my-develop-feature
