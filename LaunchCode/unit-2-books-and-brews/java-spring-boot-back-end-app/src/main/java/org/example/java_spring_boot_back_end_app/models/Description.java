@@ -2,6 +2,7 @@ package org.example.java_spring_boot_back_end_app.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Description {
@@ -13,9 +14,13 @@ public class Description {
     @Lob
     private String summary;
 
-    private Boolean isTrending;
+    @NotNull(message="Must specify if a book is trending using true/false.")
+    private boolean isTrending;
 
+    @NotNull(message="Book sales price is required.")
     private float salesPrice;
+
+    @NotNull(message="Book original price is required.")
     private float originalPrice;
 
     @OneToOne(mappedBy = "description")

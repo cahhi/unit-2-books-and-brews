@@ -24,14 +24,6 @@ public class BookDTO {
 
     private Description description;
 
-    @NotNull(message="Must specify if a book is trending using true/false.")
-    private boolean isTrending;
-
-    @NotNull(message="Book sales price is required.")
-    private float salePrice;
-
-    @NotNull(message="Book original price is required.")
-    private float originalPrice;
 
 
     public BookDTO(String title, int authorId, int[] genreIds, Description description) {
