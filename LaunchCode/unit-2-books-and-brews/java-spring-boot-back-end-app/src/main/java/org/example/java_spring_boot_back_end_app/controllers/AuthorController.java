@@ -1,6 +1,5 @@
 package org.example.java_spring_boot_back_end_app.controllers;
 
-
 import jakarta.validation.Valid;
 import org.example.java_spring_boot_back_end_app.dto.AuthorDTO;
 import org.example.java_spring_boot_back_end_app.models.Author;
@@ -12,13 +11,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
 import java.util.List;
 
+//Trying to enable CORS for this specific controller as a test
 @RestController
+@CrossOrigin(origins = "http://localhost:5176")
 @RequestMapping("/api/authors") //this is where we tell Spring what the base path is for all the endpoints in this controller
 public class AuthorController {
+
 
     //Using Autowire to use JpaRepository methods to interact with database
     @Autowired

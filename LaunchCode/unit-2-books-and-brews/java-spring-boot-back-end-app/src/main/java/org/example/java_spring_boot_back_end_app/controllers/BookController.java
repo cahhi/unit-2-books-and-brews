@@ -16,11 +16,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5176")
 @RequestMapping("/api/books") //this is where we tell Spring what the base path is for all the endpoints in this controller
 public class BookController {
 
@@ -58,6 +60,13 @@ public class BookController {
             return new ResponseEntity<>(book, HttpStatus.OK); //this will return as 200 ok
         }
     }
+
+    //Returning what books are associated with the authorId as validation
+    @GetMapping(value="/author/{authorId}", produces =MediaType.APPLICATION_JSON_VALUE ) //path variable
+    public List<Book> getBookByAuthorId(@PathVariable int authorId)  {
+       return bookRepository.findByAuthorId(authorId);
+    }
+
 
     //Save book
     //use query parameters

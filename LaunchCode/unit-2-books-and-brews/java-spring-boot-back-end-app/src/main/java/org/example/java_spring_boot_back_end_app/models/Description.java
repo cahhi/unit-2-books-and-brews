@@ -2,6 +2,7 @@ package org.example.java_spring_boot_back_end_app.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -12,10 +13,8 @@ public class Description {
     private int id;
 
     @Lob
+    @NotBlank(message="Summary of book is required.")
     private String summary;
-
-    @NotNull(message="Must specify if a book is trending using true/false.")
-    private boolean isTrending;
 
     @NotNull(message="Book sales price is required.")
     private float salesPrice;
@@ -28,9 +27,8 @@ public class Description {
 
     public Description(){};
 
-    public Description(String summary, Boolean isTrending, float salesPrice, float originalPrice) {
+    public Description(String summary, float salesPrice, float originalPrice) {
         this.summary = summary;
-        this.isTrending = isTrending;
         this.salesPrice = salesPrice;
         this.originalPrice = originalPrice;
     }
@@ -39,20 +37,12 @@ public class Description {
         return id;
     }
 
-    public String getDescription() {
+    public String getSummary() {
         return summary;
     }
 
-    public void setDescription(String description) {
-        this.summary = description;
-    }
-
-    public Boolean getTrending() {
-        return isTrending;
-    }
-
-    public void setTrending(Boolean trending) {
-        isTrending = trending;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public float getSalesPrice() {

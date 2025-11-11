@@ -13,11 +13,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5176")
 @RequestMapping("/api/genres") //this is where we tell Spring what the base path is for all the endpoints in this controller
 public class GenreController {
 
