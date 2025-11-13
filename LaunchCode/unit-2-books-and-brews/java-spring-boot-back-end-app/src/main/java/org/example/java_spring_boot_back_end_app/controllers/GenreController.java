@@ -56,8 +56,4 @@ public class GenreController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // this will throw error 204 which means it was successful
         }
     }
-
-    //Update genre
-
-
 }
