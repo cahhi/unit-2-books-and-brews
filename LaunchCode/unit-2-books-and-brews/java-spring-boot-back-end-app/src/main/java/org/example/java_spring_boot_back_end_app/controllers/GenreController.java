@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5176")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/genres") //this is where we tell Spring what the base path is for all the endpoints in this controller
 public class GenreController {
 

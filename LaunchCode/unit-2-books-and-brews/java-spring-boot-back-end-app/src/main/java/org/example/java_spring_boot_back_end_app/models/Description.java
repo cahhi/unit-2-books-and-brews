@@ -22,15 +22,18 @@ public class Description {
     @NotNull(message="Book original price is required.")
     private float originalPrice;
 
+    private String image;
+
     @OneToOne(mappedBy = "description")
     private Book book;
 
     public Description(){};
 
-    public Description(String summary, float salesPrice, float originalPrice) {
+    public Description(String summary, String image, float salesPrice, float originalPrice) {
         this.summary = summary;
         this.salesPrice = salesPrice;
         this.originalPrice = originalPrice;
+        this.image = image;
     }
 
     public int getId() {
@@ -60,4 +63,8 @@ public class Description {
     public void setOriginalPrice(float originalPrice) {
         this.originalPrice = originalPrice;
     }
+
+    public String getImage() {return image;}
+
+    public void setImage(String image) {this.image = image;}
 }

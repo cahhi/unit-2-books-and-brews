@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import javax.print.attribute.standard.MediaSize;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5176")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/books") //this is where we tell Spring what the base path is for all the endpoints in this controller
 public class BookController {
 
@@ -97,8 +98,6 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // this will throw error 204 which means it was successful
         }
     }
-
-    //Update book
 
 
 }
