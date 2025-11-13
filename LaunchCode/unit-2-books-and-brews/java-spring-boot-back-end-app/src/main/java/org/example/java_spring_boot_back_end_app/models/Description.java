@@ -2,6 +2,8 @@ package org.example.java_spring_boot_back_end_app.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Description {
@@ -11,43 +13,39 @@ public class Description {
     private int id;
 
     @Lob
+    @NotBlank(message="Summary of book is required.")
     private String summary;
 
-    private Boolean isTrending;
-
+    @NotNull(message="Book sales price is required.")
     private float salesPrice;
+
+    @NotNull(message="Book original price is required.")
     private float originalPrice;
+
+    private String image;
 
     @OneToOne(mappedBy = "description")
     private Book book;
 
     public Description(){};
 
-    public Description(String summary, Boolean isTrending, float salesPrice, float originalPrice) {
+    public Description(String summary, String image, float salesPrice, float originalPrice) {
         this.summary = summary;
-        this.isTrending = isTrending;
         this.salesPrice = salesPrice;
         this.originalPrice = originalPrice;
+        this.image = image;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getDescription() {
+    public String getSummary() {
         return summary;
     }
 
-    public void setDescription(String description) {
-        this.summary = description;
-    }
-
-    public Boolean getTrending() {
-        return isTrending;
-    }
-
-    public void setTrending(Boolean trending) {
-        isTrending = trending;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public float getSalesPrice() {
@@ -65,4 +63,8 @@ public class Description {
     public void setOriginalPrice(float originalPrice) {
         this.originalPrice = originalPrice;
     }
+
+    public String getImage() {return image;}
+
+    public void setImage(String image) {this.image = image;}
 }

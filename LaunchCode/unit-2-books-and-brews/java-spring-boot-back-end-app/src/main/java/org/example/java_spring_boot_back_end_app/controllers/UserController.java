@@ -4,10 +4,12 @@ package org.example.java_spring_boot_back_end_app.controllers;
 import org.example.java_spring_boot_back_end_app.data.UserData;
 import org.example.java_spring_boot_back_end_app.models.User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/users")
 public class UserController {
 

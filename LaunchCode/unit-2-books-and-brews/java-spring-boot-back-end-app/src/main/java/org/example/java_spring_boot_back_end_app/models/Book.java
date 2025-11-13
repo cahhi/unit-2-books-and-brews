@@ -26,15 +26,6 @@ public class Book {
     @JsonManagedReference
     private Author author;
 
-    @NotNull(message="Must specify if a book is trending using true/false.")
-    private boolean isTrending;
-
-    @NotNull(message="Book sales price is required.")
-    private float salePrice;
-
-    @NotNull(message="Book original price is required.")
-    private float originalPrice;
-
     //adding a list of Genre objects and setting them to a many-to-many relationship
     @ManyToMany
     @JsonManagedReference

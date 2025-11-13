@@ -1,6 +1,5 @@
 package org.example.java_spring_boot_back_end_app.controllers;
 
-
 import jakarta.validation.Valid;
 import org.example.java_spring_boot_back_end_app.dto.AuthorDTO;
 import org.example.java_spring_boot_back_end_app.models.Author;
@@ -12,13 +11,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
 import java.util.List;
 
+//Trying to enable CORS for this specific controller as a test
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/authors") //this is where we tell Spring what the base path is for all the endpoints in this controller
 public class AuthorController {
+
 
     //Using Autowire to use JpaRepository methods to interact with database
     @Autowired
@@ -70,6 +73,16 @@ public class AuthorController {
     }
 
     //Update author
+    @PutMapping(value = "/update/{authorId}", produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateAuthor(@PathVariable int authorId, @RequestBody AuthorDTO authorData) {
+        Author author = authorRepository.findById(authorId).orElse(null);
+
+        author.setFirstName(authorData.getFirstName());
+        author.setLastName(authorData.getLastName());
+
+        Author updateAuthors = authorRepository.save(author);
+        return new ResponseEntity<>(updateAuthors, HttpStatus.OK);
+    }
 
 
 }
